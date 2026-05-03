@@ -20,7 +20,7 @@ def test_html():
         assert h5 is not None, "FAIL: No h5 found"
         print("PASS: h5 found:", h5.text)
 
-        assert "Parbati Sapkota" in driver.title, "FAIL: Title not found"
+        assert "Evan Kunkel" in driver.title, "FAIL: Title not found"
         print("PASS: Title found:", driver.title)
 
         print("\nAll tests passed!")
