@@ -73,7 +73,29 @@ pipeline {
                 '''
             }
         }
-        
+
+         stage('Generate Test Data') {
+            steps {
+                script {
+                // Ensure the label accurately targets the correct pods.
+                def appPod = sh(script: "kubectl get pods -l app=flask -o jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
+                // Execute command within the pod. 
+                sh "sleep 15"
+                sh "kubectl get pods"
+                sh "kubectl exec ${appPod} -- python3 data-gen.py"
+                }
+            }
+    }
+
+        stage('Remove Test Data') {
+            steps {
+                script {
+                    // Run the python script to generate data to add to the database
+                    def appPod = sh(script: "kubectl get pods -l app=flask -o jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
+                    sh "kubectl exec ${appPod} -- python3 data-clear.py"
+                }
+            }
+        }
         stage('Deploy to Prod Environment') {
             steps {
                 script {
