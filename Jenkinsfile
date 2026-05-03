@@ -66,42 +66,7 @@ pipeline {
                     sh "kubectl apply -f deployment-prod.yaml"
                 }
             }
-        stage('Setup Test Data') {
-            steps {
-                echo 'Running Data Generation (from Lab 4.2)...'
-                sh 'python3 data-gen.py'
-            }
-        }
-
-        stage('Security Snapshot') {
-            steps {
-                echo 'Taking Security Snapshot (from Lab 3.7)...'
-                sh 'python3 snapshot-before-security.py'
-            }
-        }
-
-        stage('DAST Security Scan') {
-            steps {
-                echo 'Running OWASP ZAP Security Scan...'
-                // IMPORTANT: Replace the URL below with your actual Dev Service URL
-                sh 'docker run --rm -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://kunkelec-dev-service -r zap_report.html || true'
-            }
-        }
-
-        stage('Security Cleanup') {
-            steps {
-                echo 'Cleaning up Security Data (from Lab 3.7)...'
-                sh 'python3 delete-security-data.py'
-            }
-        }
-
-        stage('Final Data Cleanup') {
-            steps {
-                echo 'Cleaning up Test Data (from Lab 4.2)...'
-                sh 'python3 data-clear.py'
-            }
-        }     
-        }
+      
         stage('Check Kubernetes Cluster') {
             steps {
                 script {
