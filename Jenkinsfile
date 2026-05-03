@@ -2,10 +2,10 @@ pipeline {
     agent any
     environment {
         DOCKER_CREDENTIALS_ID = 'roseaw-dockerhub'
-        DOCKER_IMAGE = 'cithit/shwanaf'                        
+        DOCKER_IMAGE = 'cithit/kunkelec'                        
         IMAGE_TAG = "build-${BUILD_NUMBER}"
-        GITHUB_URL = 'https://github.com/Farha-Shwana/225-lab5-1.git' 
-        KUBECONFIG = credentials('shwanaf-225-sp26')
+        GITHUB_URL = 'https://github.com/kunkelec-stack/Lab-5.1.git' 
+        KUBECONFIG = credentials('kunkelec-225-sp26')
     }
     stages {
         stage('Checkout') {
